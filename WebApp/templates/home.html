@@ -1,0 +1,189 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- <link rel="stylesheet" type="text/css" href="CSS/main.css"/>
+        <link rel='shortcut icon' type='image/png' href='/Images/github.png'/> -->
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Dela+Gothic+One&family=Secular+One&family=Yeseva+One&display=swap" rel="stylesheet"/>
+
+        <title>Researcher</title>
+    </head>
+
+    <style>
+        
+        html{scroll-behavior: smooth;}
+        body{
+            color: #f2f5ff;
+            /* color: #63fdd9; 
+            background-color: #143361; */
+            margin: 0;
+            background-color: #0a192f;
+            font-family: 'PT Mono', monospace;
+            user-select: none;
+            font-family: 'Secular One', sans-serif;
+        }
+        body *{
+            box-sizing: border-box;
+        }
+        #body{
+            width: 97%;
+            height: 60%;
+            margin: auto;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+        }
+        #input, #output{
+            width: 45%;
+            border-radius: 5px;
+            background-color:#416192;
+            margin: 3px;
+            padding: 5px;
+            height: fit-content;
+        }
+        input[type='text'], #btn{
+            width: 100%;
+            height: 40px;
+            border-radius: 3px;
+            border: none;
+            padding: 5px;
+            font-size: 15px;
+            font-family: 'PT Mono', monospace;
+            background-color:#cfdbee;
+        }
+        #output{
+            max-height: 434px;
+            overflow-y: scroll;
+        }
+        textarea{
+            margin-top: 5px;
+            padding: 5px;
+            width: 100%;
+            height: 300px;
+            border-radius: 5px;
+            font-size: 15px;
+            font-family: 'PT Mono', monospace;
+            resize: none;
+            background-color:#cfdbee;
+        }
+        #btn{
+            margin-top: 5px;
+            background-color: transparent;
+            border: 1px solid aqua;
+            color: aqua;
+            cursor: pointer;
+        }
+        #btn:hover{
+            background-color: aqua;
+            color:black;
+        }
+        select{
+            margin-top: 5px;
+            border-radius: 5px;
+            padding: 5px;
+            background-color:#cfdbee;
+        }
+        .item{
+            border-radius: 5px;
+            padding: 7px;
+            height: fit-content;
+            border: 1px solid #cfdbee;
+            margin-bottom: 5px;
+        }
+        .item:hover{
+            background-color: #cfdbee;
+            color:black;
+        }
+        .itemHeader{
+            font-size: 25px;
+            font-weight: bold;
+            overflow-wrap: break-word;
+        }
+        .itemDate{font-size: 13px;}
+
+        ::-webkit-scrollbar {width: 10px;}
+        ::-webkit-scrollbar-track {background: #f1f1f1;}
+        ::-webkit-scrollbar-thumb {background: #888;}
+        ::-webkit-scrollbar-thumb:hover {background: #555;}
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#btn").click(function(){
+                let message = {title:$("#title").val(), abstract:$("#abstract").val()}
+
+                $.post("/", JSON.stringify(message), function(response, status){
+                    console.log(response)
+                    for (let i = 0; ; i++) {
+                        if(response[i]==undefined)break
+                        $("#output").append("<div class='item'><a href='" + response[i] + "'>Conference" + i + "</a></div>")
+                    }
+                })
+            })
+        })
+    </script>
+
+    <body>
+        <br><br><br><br>
+        <div style="padding: 5px; margin-bottom: 0px;">
+            <h1 style="font-size: 65px; text-align: center;">Researcher</h1>
+        </div>
+        
+        <div id="body">
+            <div id="input">
+                <input id="title" type="text" placeholder="Enter paper title"/>
+                <textarea id="abstract" placeholder="Enter paper abstract"></textarea>
+                <select id="month-select">
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                <button id="btn">Search</button>
+            </div>
+            <div id="output">
+                <h2 style="text-align: center;">Conferences</h2>
+                <!-- <div class="item">
+                    <span class="itemHeader">ArabICT</span>
+                    <br>
+                    <span class="itemDate">ArabICT</span>
+                </div>
+                <div class="item">
+                    <span class="itemHeader">ArabICT</span>
+                    <br>
+                    <span class="itemDate">ArabICT</span>
+                </div>  
+                <div class="item">
+                    <span class="itemHeader">ArabICT</span>
+                    <br>
+                    <span class="itemDate">ArabICT</span>
+                </div>  
+                <div class="item">
+                    <span class="itemHeader">ArabICT</span>
+                    <br>
+                    <span class="itemDate">ArabICT</span>
+                </div>  
+                <div class="item">
+                    <span class="itemHeader">ArabICT</span>
+                    <br>
+                    <span class="itemDate">ArabICT</span>
+                </div>   -->
+            </div>
+        </div>
+    </body>
+</html>
